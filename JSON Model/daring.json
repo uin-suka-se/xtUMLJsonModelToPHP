@@ -1,0 +1,908 @@
+{
+  "type": "subsystem",
+  "sub_id": "s1",
+  "sub_name": "daring",
+  "model": [
+    {
+      "type": "superclass",
+      "superclass_id": "111",
+      "superclass_name": "baseEntity",
+      "KL": "baseent",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "nim",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "status",
+          "data_type": "state"
+        }
+      ],
+      "subclasses": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa"
+        },
+        {
+          "class_id": "2",
+          "class_name": "dosen"
+        },
+        {
+          "class_id": "11",
+          "class_name": "TIM2"
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "class_id": "1",
+      "class_name": "mahasiswa",
+      "KL": "mhs",
+      "typedata": "dataStore",
+      "store_name": [
+        "setActive",
+        "onActive",
+        "setCuti",
+        "onCuti",
+        "setAlumni",
+        "setDropout",
+        "active",
+        "cuti",
+        "available",
+        "not_available",
+        "onTime",
+        "late",
+        "init",
+        "pengajuan_topik",
+        "pemilihan_pembimbing",
+        "penyusunan_proposal",
+        "penyusunan_laporan",
+        "seminar_hasil",
+        "sidang",
+        "lulus",
+        "active",
+        "expired",
+        "active",
+        "completed",
+        "active",
+        "completed",
+        "resume",
+        "pause"
+      ],
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "nim",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "status",
+          "default_value": "states.active",
+          "data_type": "state"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "nama",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "semester",
+          "data_type": "integer"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "ipk",
+          "data_type": "real"
+        },
+        {
+          "attribute_type": "referential_attribute",
+          "attribute_name": "ukt_id",
+          "data_type": "id"
+        }
+      ],
+      "states": [
+        {
+          "state_id": "1",
+          "state_name": "aktif",
+          "state_model_name": "mahasiswa",
+          "state_value": "active",
+          "state_type": "string",
+          "state_event": ["setActive", "onActive"],
+          "transitions": [
+            {
+              "target_state_id": "1",
+              "target_state": "aktif",
+              "target_state_event": "onActive",
+              "parameter": "nim : id"
+            },
+            {
+              "target_state_id": "2",
+              "target_state": "cuti",
+              "target_state_event": "setCuti",
+              "parameter": "nim : id"
+            },
+            {
+              "target_state_id": "3",
+              "target_state": "alumni",
+              "target_state_event": "setAlumi",
+              "parameter": "nim : id"
+            },
+            {
+              "target_state_id": "4",
+              "target_state": "dropout",
+              "target_state_event": "setDropout",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here",
+          "event_data": ["setActive", "onActive"],
+          "KL": "mhs"
+        },
+        {
+          "state_id": "2",
+          "state_name": "cuti",
+          "state_model_name": "mahasiswa",
+          "state_value": "cuti",
+          "state_type": "string",
+          "state_event": ["setCuti", "onCuti"],
+          "transitions": [
+            {
+              "target_state_id": "1",
+              "target_state": "aktif",
+              "target_state_event": "setActive",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here",
+          "event_data": ["setCuti", "onCuti"],
+          "KL": "mhs"
+        },
+        {
+          "state_id": "3",
+          "state_model_name": "mahasiswa",
+          "state_value": "alumni",
+          "state_type": "string",
+          "state_event": ["setAlumni"],
+          "transitions": [],
+          "action": "// Implementation code here",
+          "event_data": ["setAlumni"],
+          "KL": "mhs"
+        },
+        {
+          "state_id": "4",
+          "state_model_name": "mahasiswa",
+          "state_value": "dropout",
+          "state_type": "string",
+          "state_event": ["setDropout"],
+          "transitions": [],
+          "action": "// Implementation code here",
+          "event_data": ["setDropout"],
+          "KL": "mhs"
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "class_id": "2",
+      "class_name": "dosen",
+      "KL": "dsn",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "nip",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "status",
+          "default_value": "dsn_status.active",
+          "data_type": "state"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "nama",
+          "data_type": "string"
+        }
+      ],
+      "states": [
+        {
+          "state_id": "5",
+          "state_name": "aktif",
+          "state_model_name": "dosen",
+          "state_value": "active",
+          "state_type": "string",
+          "state_event": ["setActive", "onActive"],
+          "transitions": [
+            {
+              "target_state_id": "6",
+              "target_state": "cuti",
+              "target_state_event": "setCuti",
+              "parameter": "nip : id"
+            }
+          ],
+          "action": "// Implementation code here",
+          "KL": "dsn",
+          "event_data": ["active"]
+        },
+        {
+          "state_id": "6",
+          "state_name": "cuti",
+          "state_model_name": "dosen",
+          "state_value": "cuti",
+          "state_type": "string",
+          "state_event": ["setCuti", "onCuti"],
+          "transitions": [
+            {
+              "target_state_id": "5",
+              "target_state": "aktif",
+              "target_state_event": "setActive",
+              "parameter": "nip : id"
+            }
+          ],
+          "action": "// Implementation code here",
+          "KL": "dsn",
+          "event_data": ["cuti"]
+        }
+      ],
+      "typedata": "dataStore",
+      "store_name": ["active", "cuti"]
+    },
+    {
+      "type": "class",
+      "class_id": "3",
+      "class_name": "mata_kuliah",
+      "KL": "mtk",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "matkul_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "nama",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "curriculum",
+          "data_type": "integer"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "required_semester",
+          "data_type": "integer"
+        }
+      ]
+    },
+    {
+      "type": "association",
+      "name": "R1",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "0..*",
+          "role_name": "takes"
+        },
+        {
+          "class_id": "3",
+          "class_name": "mata_kuliah",
+          "class_multiplicity": "0..*",
+          "role_name": "is taken by"
+        }
+      ],
+      "model": {
+        "type": "association_class",
+        "class_id": "4",
+        "class_name": "mahasiswa_matakuliah",
+        "KL": "mhs_mtk",
+        "attributes": [
+          {
+            "attribute_type": "naming_attribute",
+            "attribute_name": "mhs_mtk_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "matkul_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "nim",
+            "data_type": "id"
+          }
+        ],
+        "states": [
+          {
+            "state_id": "7",
+            "state_name": "aktif",
+            "state_model_name": "mahasiswa_matakuliah",
+            "state_value": "active",
+            "state_type": "string",
+            "state_event": ["setActive", "onActive"],
+            "transitions": [
+              {
+                "target_state_id": "1",
+                "target_state": "aktif",
+                "target_state_event": "onActive",
+                "parameter": "nim : id"
+              },
+              {
+                "target_state_id": "2",
+                "target_state": "cuti",
+                "target_state_event": "setCuti",
+                "parameter": "nim : id"
+              },
+              {
+                "target_state_id": "3",
+                "target_state": "alumni",
+                "target_state_event": "setAlumni",
+                "parameter": "nim : id"
+              },
+              {
+                "target_state_id": "4",
+                "target_state": "dropout",
+                "target_state_event": "setDropout",
+                "parameter": "nim : id"
+              }
+            ],
+            "action": "// Implementation code here",
+            "KL": "mhs_mtk"
+          },
+          {
+            "state_id": "8",
+            "state_name": "cuti",
+            "state_model_name": "mahasiswa_matakuliah",
+            "state_value": "cuti",
+            "state_type": "string",
+            "state_event": ["setCuti", "onCuti"],
+            "transitions": [
+              {
+                "target_state_id": "1",
+                "target_state": "aktif",
+                "target_state_event": "setActive",
+                "parameter": "nim : id"
+              }
+            ],
+            "action": "// Implementation code here",
+            "KL": "mhs_mtk"
+          },
+          {
+            "state_id": "9",
+            "state_name": "alumni",
+            "state_model_name": "mahasiswa_matakuliah",
+            "state_value": "alumni",
+            "state_type": "string",
+            "state_event": ["setAlumni"],
+            "transitions": [],
+            "action": "// Implementation code here",
+            "KL": "mhs_mtk"
+          },
+          {
+            "state_id": "10",
+            "state_name": "mekek",
+            "state_model_name": "mahasiswa_matakuliah",
+            "state_value": "mekek",
+            "state_type": "string",
+            "state_event": ["setMekek"],
+            "transitions": [],
+            "action": "// Implementation code here",
+            "KL": "mhs_mtk"
+          }
+        ]
+      },
+      "typedata": "dataStore"
+    },
+    {
+      "type": "association",
+      "name": "R2",
+      "class": [
+        {
+          "class_id": "2",
+          "class_name": "dosen",
+          "class_multiplicity": "0..*",
+          "role_name": "teaches"
+        },
+        {
+          "class_id": "3",
+          "class_name": "mata_kuliah",
+          "class_multiplicity": "1..*",
+          "role_name": "is taught by"
+        }
+      ],
+      "model": {
+        "type": "association_class",
+        "class_id": "5",
+        "class_name": "dosen_matakuliah",
+        "KL": "dsn_mtk",
+        "attributes": [
+          {
+            "attribute_type": "naming_attribute",
+            "attribute_name": "dsn_mtk_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "matkul_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "nip",
+            "data_type": "id"
+          }
+        ]
+      },
+      "typedata": "dataStore"
+    },
+    {
+      "type": "association",
+      "name": "R3",
+      "class": [
+        {
+          "class_id": "4",
+          "class_name": "mahasiswa_matakuliah",
+          "class_multiplicity": "1..*",
+          "role_name": "has"
+        },
+        {
+          "class_id": "5",
+          "class_name": "dosen_matakuliah",
+          "class_multiplicity": "0..*",
+          "role_name": "is parameter to"
+        }
+      ],
+      "model": {
+        "type": "association_class",
+        "class_id": "6",
+        "class_name": "mahasiswa_dosen_matakuliah",
+        "KL": "mhs_dsn_mtk",
+        "attributes": [
+          {
+            "attribute_type": "naming_attribute",
+            "attribute_name": "mhs_dsn_mtk_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "mhs_mtk_id",
+            "data_type": "id"
+          },
+          {
+            "attribute_type": "referential_attribute",
+            "attribute_name": "dsn_mtk_id",
+            "data_type": "id"
+          }
+        ]
+      },
+      "typedata": "dataStore"
+    },
+    {
+      "type": "class",
+      "class_id": "7",
+      "class_name": "uang_kuliah_tunggal",
+      "KL": "ukt",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "ukt_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "golongan",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "nominal",
+          "data_type": "integer"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "status",
+          "data_type": "state"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "association",
+      "name": "R4",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "1..*",
+          "role_name": "is assigned to"
+        },
+        {
+          "class_id": "7",
+          "class_name": "uang_kuliah_tunggal",
+          "class_multiplicity": "1..1",
+          "role_name": "has"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "class",
+      "class_id": "8",
+      "class_name": "tugas_akhir",
+      "KL": "ta",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "ta_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "judul",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "referential_attribute",
+          "attribute_name": "mhs_id",
+          "data_type": "id"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "association",
+      "name": "R5",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "1..1",
+          "role_name": "is assigned to"
+        },
+        {
+          "class_id": "8",
+          "class_name": "tugas_akhir",
+          "class_multiplicity": "1..1",
+          "role_name": "has"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "class",
+      "class_id": "9",
+      "class_name": "TIMER",
+      "KL": "TIM",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "timer_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "instance_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "event_label",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "time_remaining",
+          "data_type": "timestamp"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "timer_status",
+          "data_type": "string"
+        }
+      ],
+      "states": [
+        {
+          "state_id": "19",
+          "state_model_name": "TIMER",
+          "state_name": "active",
+          "state_value": "active",
+          "state_type": "string",
+          "state_event": ["setActive"],
+          "KL": "TIM",
+          "event_data": ["active"],
+          "transitions": [
+            {
+              "target_state_id": "20",
+              "target_state": "expired",
+              "target_state_event": "setExpired",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        },
+        {
+          "state_id": "20",
+          "state_model_name": "TIMER",
+          "state_name": "expired",
+          "state_value": "expired",
+          "state_type": "string",
+          "state_event": ["setExpired"],
+          "KL": "TIM",
+          "event_data": ["expired"],
+          "transitions": [
+            {
+              "target_state_id": "19",
+              "target_state": "active",
+              "target_state_event": "setActive",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        }
+      ],
+      "typedata": "dataStore",
+      "store_name": ["active", "expired"]
+    },
+    {
+      "type": "association",
+      "name": "R6",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "1..*",
+          "role_name": "waktu a"
+        },
+        {
+          "class_id": "9",
+          "class_name": "TIMER",
+          "class_multiplicity": "1",
+          "role_name": "waktu b"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "class",
+      "class_id": "10",
+      "class_name": "TIM1",
+      "KL": "TIM1",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "tim1_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "description",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "time_set",
+          "data_type": "timestamp"
+        }
+      ],
+      "states": [
+        {
+          "state_id": "21",
+          "state_model_name": "TIM1",
+          "state_name": "active",
+          "state_value": "active",
+          "state_type": "string",
+          "state_event": ["setActive"],
+          "KL": "TIM1",
+          "event_data": ["active"],
+          "transitions": [
+            {
+              "target_state_id": "22",
+              "target_state": "completed",
+              "target_state_event": "setCompleted",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        },
+        {
+          "state_id": "22",
+          "state_model_name": "TIM1",
+          "state_name": "completed",
+          "state_value": "completed",
+          "state_type": "string",
+          "state_event": ["setCompleted"],
+          "KL": "TIM1",
+          "event_data": ["completed"],
+          "transitions": [
+            {
+              "target_state_id": "21",
+              "target_state": "active",
+              "target_state_event": "setActive",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        }
+      ],
+      "typedata": "dataStore",
+      "store_name": ["active", "completed"]
+    },
+    {
+      "type": "association",
+      "name": "R7",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "1..*",
+          "role_name": "waktu aa"
+        },
+        {
+          "class_id": "10",
+          "class_name": "TIM1",
+          "class_multiplicity": "1",
+          "role_name": "waktu bb"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "class",
+      "class_id": "11",
+      "class_name": "TIM2",
+      "KL": "TIM2",
+      "attributes": [
+        {
+          "attribute_type": "naming_attribute",
+          "attribute_name": "tim2_id",
+          "data_type": "id"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "description",
+          "data_type": "string"
+        },
+        {
+          "attribute_type": "descriptive_attribute",
+          "attribute_name": "time_set",
+          "data_type": "timestamp"
+        }
+      ],
+      "states": [
+        {
+          "state_id": "23",
+          "state_model_name": "TIM2",
+          "state_name": "active",
+          "state_value": "active",
+          "state_type": "string",
+          "state_event": ["setActive"],
+          "KL": "TIM2",
+          "event_data": ["active"],
+          "transitions": [
+            {
+              "target_state_id": "24",
+              "target_state": "completed",
+              "target_state_event": "setCompleted",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        },
+        {
+          "state_id": "24",
+          "state_model_name": "TIM2",
+          "state_name": "completed",
+          "state_value": "completed",
+          "state_type": "string",
+          "state_event": ["setCompleted"],
+          "KL": "TIM2",
+          "event_data": ["completed"],
+          "transitions": [
+            {
+              "target_state_id": "23",
+              "target_state": "active",
+              "target_state_event": "setActive",
+              "parameter": "nim : id"
+            }
+          ],
+          "action": "// Implementation code here"
+        }
+      ],
+      "typedata": "dataStore",
+      "store_name": ["active", "completed"]
+    },
+    {
+      "type": "association",
+      "name": "R8",
+      "class": [
+        {
+          "class_id": "1",
+          "class_name": "mahasiswa",
+          "class_multiplicity": "1..*",
+          "role_name": "waktu aaa"
+        },
+        {
+          "class_id": "11",
+          "class_name": "TIM2",
+          "class_multiplicity": "1",
+          "role_name": "waktu bbb"
+        }
+      ],
+      "typedata": "dataStore"
+    },
+    {
+      "type": "subsystem_communication_model",
+      "name": "R8",
+      "subsystems": [
+        {
+          "sub_name": "daring"
+        }
+      ],
+      "typedata": "dataStore"
+    }
+  ],
+  "OCM": [
+    {
+      "events": [
+        "setActive",
+        "onActive",
+        "setCuti",
+        "onCuti",
+        "setAlumni",
+        "setDropout",
+        "setAvailable",
+        "onAvailable",
+        "setNotAvailable",
+        "onNotAvailable",
+        "setOnTime",
+        "setLate",
+        "setInit",
+        "setPengajuanTopik",
+        "setPemilihanPembimbing",
+        "setPenyusunanProposal",
+        "setPenyusunanLaporan",
+        "setSeminarHasil",
+        "setSidang",
+        "setLulus",
+        "setExpired",
+        "setCompleted",
+        "setResume",
+        "onResume",
+        "pause"
+      ]
+    },
+    {
+      "name": "mahasiswa"
+    },
+    {
+      "name": "dosen"
+    },
+    {
+      "name": "mata_kuliah"
+    },
+    {
+      "name": "uang_kuliah_tunggal"
+    },
+    {
+      "name": "tugas_akhir"
+    },
+    {
+      "name": "TIM1"
+    },
+    {
+      "name": "TIM2"
+    },
+    {
+      "name": "uji"
+    },
+    {
+      "name": "uji2"
+    }
+  ]
+}
